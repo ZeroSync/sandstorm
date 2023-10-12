@@ -534,7 +534,7 @@ pub struct AirPrivateInput {
     pub poseidon: Vec<PoseidonInstance>,
 }
 
-#[derive(Clone, Deserialize, Debug)]
+#[derive(Clone, Deserialize, Debug, CanonicalSerialize, CanonicalDeserialize)]
 #[serde(bound = "F: PrimeField")]
 pub struct CompiledProgram<F: Field> {
     #[serde(deserialize_with = "deserialize_vec_hex_str")]
