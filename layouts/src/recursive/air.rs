@@ -144,7 +144,7 @@ impl ministark::air::AirConfig for AirConfig {
         // x^(n/16) - ω^(n/16)      = (x - ω_1)(x - ω_17)(x - ω_33)(x - )
         // x^(n/16) - ω^(n/16)^(15) = (x - ω_15)(x - ω_31)(x - ω_47)(x - ω_6ω_493)
         let flag0_offset =
-            FieldVariant::Fp(g.pow([(Flag::Zero as usize * n / CYCLE_HEIGHT) as u64]));
+            FieldVariant::Fp(g.pow([Flag::Zero as u64 * n as u64 / CYCLE_HEIGHT as u64]));
         let flag0_zerofier = X.pow(n / CYCLE_HEIGHT) - Constant(flag0_offset);
         let every_row_zerofier = X.pow(n) - &one;
         let every_row_zerofier_inv = &one / &every_row_zerofier;
@@ -657,7 +657,7 @@ impl ministark::air::AirConfig for AirConfig {
         // vanishes on groups of 256 consecutive rows except the last row in each group
         // TODO: come up with better names for these
         let pedersen_transition_zerofier_inv = (X.pow(n / 1024)
-            - Constant(FieldVariant::Fp(g.pow([(255 * n / 256) as u64]))))
+            - Constant(FieldVariant::Fp(g.pow([255 * n as u64 / 256]))))
             * &every_fourth_row_zerofier_inv;
 
         // Constraint operated on groups of 256 rows.
@@ -684,7 +684,7 @@ impl ministark::air::AirConfig for AirConfig {
         // (x-ω^255)(x-ω^511) / (X^n-1) = 1/(x-ω^0)..(x-ω^254)(x-ω^256)..(x-ω^510)
         // vanishes on the 252nd row of every 256 rows
         let pedersen_zero_suffix_zerofier_inv =
-            &one / (X.pow(n / 1024) - Constant(FieldVariant::Fp(g.pow([(63 * n / 64) as u64]))));
+            &one / (X.pow(n / 1024) - Constant(FieldVariant::Fp(g.pow([63 * n as u64 / 64]))));
 
         // Note that with cairo's default field each element is 252 bits.
         // Therefore we are decomposing 252 bit numbers to do pedersen hash.
@@ -934,7 +934,7 @@ impl ministark::air::AirConfig for AirConfig {
         let every_32_row_zerofier = X.pow(n / 32) - &one;
         let every_32_row_zerofier_inv = &one / &every_32_row_zerofier;
         let bitwise_transition_zerofier_inv = (X.pow(n / 128)
-            - Constant(FieldVariant::Fp(g.pow([(3 * n / 4) as u64]))))
+            - Constant(FieldVariant::Fp(g.pow([3 * n as u64 / 4]))))
             * &every_32_row_zerofier_inv;
 
         let all_bitwise_zerofier = X.pow(n / 128) - &one;

@@ -171,7 +171,7 @@ fn verify<Claim: Stark<Fp = impl Field>>(
     claim: Claim,
 ) {
     let proof_bytes = fs::read(proof_path).unwrap();
-    let proof = Proof::<Claim>::deserialize_compressed(&*proof_bytes).unwrap();
+    let proof = Proof::deserialize_compressed(&*proof_bytes).unwrap();
     let now = Instant::now();
     claim.verify(proof, required_security_bits.into()).unwrap();
     println!("Proof verified in: {:?}", now.elapsed());
